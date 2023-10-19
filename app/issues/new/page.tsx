@@ -31,6 +31,18 @@ const NewIssuePage = () => {
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            setIsSubmitting(true);
+            await axios.post('/api/issues', data);
+            router.push('/issues');
+        } catch (error) {
+            //console.log(error);
+            setIsSubmitting(false);
+            setError('An unexpected error occured');
+        }
+    })
+
     console.log(register('title'));
     return (
         <>
@@ -44,18 +56,7 @@ const NewIssuePage = () => {
                 <form
                     className='text-center items-center  space-y-3'
                     // onSubmit={handleSubmit((data) => { console.log(data) })}>
-                    onSubmit={handleSubmit(async (data) => {
-                        try {
-                            setIsSubmitting(true);
-                            await axios.post('/api/issues', data);
-                            router.push('/issues');
-                        } catch (error) {
-                            //console.log(error);
-                            setIsSubmitting(false);
-                            setError('An unexpected error occured');
-                        }
-
-                    })}>
+                    onSubmit={onSubmit}>
                     <TextField.Root>
                         <TextField.Input placeholder='Title' {...register('title')} />
                     </TextField.Root>

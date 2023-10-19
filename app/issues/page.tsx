@@ -4,6 +4,9 @@ import { Button, Table } from '@radix-ui/themes'
 import Link from 'next/link'
 import axios from 'axios';
 import { Issue } from '@prisma/client';
+import IssueStatusBadge from '../components/IssueStatusBadge';
+import IssueActions from './IssueActions';
+import delay from 'delay';
 
 const IssuePage = () => {
 
@@ -12,6 +15,7 @@ const IssuePage = () => {
 
     useEffect(() => {
         axios.get('/api/issues').then((response) => {
+            delay(10000);
             setIssues(response.data);
             setLoading(false);
         }).catch((error) => {
@@ -31,12 +35,12 @@ const IssuePage = () => {
             <h2 className='text-3xl text-center items-center'>Issues Page</h2><br />
 
 
-            <Button>
+            {/* <Button>
                 <Link href={"/issues/new"}>New Issue</Link>
-            </Button>
+            </Button> */}
 
             <br />
-
+            <IssueActions />
             <Table.Root className='py-3'>
                 <Table.Header>
                     <Table.Row>
@@ -58,7 +62,10 @@ const IssuePage = () => {
                             </Table.Cell>
 
                             <Table.Cell className='hidden md:table-cell'>{issue.description}</Table.Cell>
-                            <Table.Cell className='hidden md:table-cell'>{issue.status}</Table.Cell>
+                            <Table.Cell className='hidden md:table-cell'>
+                                <IssueStatusBadge status={issue.status} />
+                                {/* {issue.status} */}
+                            </Table.Cell>
                             <Table.Cell className='hidden md:table-cell'>{issue.createdAt}</Table.Cell>
                         </Table.Row>
                     ))}

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { Button, Table } from '@radix-ui/themes'
+import { Table } from '@radix-ui/themes'
 // import Link from 'next/link'
 import Link from '../components/Link';
 import axios from 'axios';
@@ -15,7 +15,7 @@ const IssuePage = () => {
 
     useEffect(() => {
         axios.get('/api/issues').then((response) => {
-            delay(10000);
+            delay(10000); //remove in production code
             setIssues(response.data);
             setLoading(false);
         }).catch((error) => {

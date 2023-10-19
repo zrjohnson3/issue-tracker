@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, TextArea, Button, Callout, Text } from '@radix-ui/themes'
-import SimpleMDE from "react-simplemde-editor";
+import dynamic from 'next/dynamic';
 import "easymde/dist/easymde.min.css";
 import { data } from 'autoprefixer';
 import axios from 'axios';
@@ -12,6 +12,11 @@ import { createIssueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
+
+// Dynamic import for SimpleMDE and disable SSR for it
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+    ssr: false,
+});
 
 
 // Let zod infer type of IssueForm based on schema

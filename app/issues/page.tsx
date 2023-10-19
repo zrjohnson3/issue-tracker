@@ -57,7 +57,8 @@ const IssuePage = () => {
                             <Table.Cell className='hidden md:table-cell'>{issue.id}</Table.Cell>
                             <Table.Cell>
                                 <Link href={`/issues/${issue.id}`}>
-                                    <p className='hover:underline'>{issue.title}</p>
+                                    {/* <p className='hover:underline'>{issue.title}</p> */}
+                                    {issue.title}
                                 </Link>
                             </Table.Cell>
 

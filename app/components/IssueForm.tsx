@@ -1,10 +1,9 @@
 'use client';
 import React, { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
-import { TextField, TextArea, Button, Callout, Text } from '@radix-ui/themes'
+import { TextField, Button, Callout } from '@radix-ui/themes'
 import dynamic from 'next/dynamic';
 import "easymde/dist/easymde.min.css";
-import { data } from 'autoprefixer';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';

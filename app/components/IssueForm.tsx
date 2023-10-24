@@ -8,7 +8,7 @@ import { data } from 'autoprefixer';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createIssueSchema } from '@/app/validationSchemas';
+import { issueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
@@ -21,7 +21,7 @@ const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
 
 
 // Let zod infer type of IssueForm based on schema
-type IssueForm = z.infer<typeof createIssueSchema>;
+type IssueForm = z.infer<typeof issueSchema>;
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
     // Navigation - appRouter/navigation is one that is used with app route
@@ -29,12 +29,14 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 
     // React Hook Form and zod schema validation
     const { register, control, handleSubmit, formState: { errors, isValid } } = useForm<IssueForm>({
-        resolver: zodResolver(createIssueSchema),
+        resolver: zodResolver(issueSchema),
     });
 
     // State Varaiables
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Submitting form
 
     const onSubmit = handleSubmit(async (data) => {
         try {

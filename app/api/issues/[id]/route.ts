@@ -6,14 +6,19 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PATCH(
     request: NextRequest,
     { params }: { params: { id: string } }) {
+    console.log("Starting PATCH Request");
+
     const body = await request.json();
     const validation = issueSchema.safeParse(body);
+
     if (!validation.success) {
         return NextResponse.json(validation.error.format(), { status: 400 });
     }
+
     const issue = await prisma.issue.findUnique({
         where: { id: parseInt(params.id) }
     })
+
     if (!issue) {
         return NextResponse.json("Issue not found", { status: 404 })
     }
@@ -27,5 +32,27 @@ export async function PATCH(
     })
 
     return NextResponse.json(updateIssue);
+
+}
+
+
+/* DELTE Request (Delete Issue)  */
+export async function DELETE(
+    request: NextRequest,
+    { params }: { params: { id: string } }) {
+    console.log("Starting DELETE Request");
+
+    const issue = await prisma.issue.findUnique({
+        where: { id: parseInt(params.id) }
+    })
+    if (!issue) {
+        return NextResponse.json("Issue not found", { status: 404 })
+    }
+
+    const deleteIssue = await prisma.issue.delete({
+        where: { id: issue.id }
+    })
+
+    return NextResponse.json(deleteIssue);
 
 }
